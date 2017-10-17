@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <h1>Meetup Filter</h1>
+    <h1>About</h1>
   </div>
 </template>
 

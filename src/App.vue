@@ -1,6 +1,12 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <header>
+      <nav>
+        <router-link to="/">Top</router-link>
+        <router-link to="/about">About</router-link>
+        <a href='https://github.com/dorachan2000/meetup_filter'>Github Icon</a>
+      </nav>
+    </header>
     <router-view/>
   </div>
 </template>
