@@ -2,7 +2,7 @@
   <div class="filter-condition">
     <div>
       <ul>
-        <li>zip code</li>
+        <li>zip codee</li>
         <li>distance</li>
         <li>time frame</li>
         <li>interest</li>
@@ -11,18 +11,44 @@
         <li>my meetup?</li>
       </ul>
     </div>
-    <div class="filtered-list"></div>
+    <ul class="filtered-list">
+      <li v-for="meetup in meetups">
+        {{meetup.name}}
+        {{meetup.yes_rsvp_count}}
+        {{meetup.short_link}}
+      </li>
+    </ul>
+    <button v-on:click="getEvents">click for data</button>
   </div>
 </template>
 
 <script>
+import getEvents from '../api/index.js'
 export default {
-  name: 'HelloWorld',
+  name: 'Filter',
   data() {
     return {
-      msg: 'Welcome to Your Vue.js App',
+      meetups: [
+        {
+          yes_rsvp_count: 8,
+          short_link: 'http://meetu.ps/e/D54Kr/k1RDM/i',
+          link: 'https://www.meetup.com/productmanagementLA/events/241999183/',
+          created: 1500974498000,
+          name: 'How to Build Awesome On Demand Apps by Elementz Product Manager',
+        },
+      ],
     };
   },
+  created() {
+    this.getEvents()
+  },
+  methods: {
+    getEvents: async function() {
+      const test = await getEvents()
+      this.meetups = []
+      this.meetups = this.meetups.concat(test.slice(0, 10))
+    }
+  }
 };
 </script>
 
