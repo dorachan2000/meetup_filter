@@ -73,7 +73,8 @@ li {
 }
 
 a {
-  color: #42b983;
+  color: black;
+  text-decoration: none;
 }
 p {
   margin: 0;
@@ -81,6 +82,7 @@ p {
 }
 .filtered-list {
   display: flex;
+  margin: 0 3rem;
   flex-direction: column;
 }
 .meetup-event__container {

@@ -5,6 +5,7 @@
         <router-link to="/">Top</router-link>
         <router-link to="/filter">Filter</router-link>
         <router-link to="/about">About</router-link>
+        <router-link to="/form">Form</router-link>
         <a href='https://github.com/dorachan2000/meetup_filter'>Github Icon</a>
       </nav>
     </header>
