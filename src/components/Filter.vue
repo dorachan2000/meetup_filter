@@ -17,6 +17,9 @@
           <a :href="meetup.short_link">
             <p class="meetup-event__group-name">{{meetup.group.name}}</p>
             <p class="meetup-event__event-name">{{meetup.name}}</p>
+            <p v-if="meetup.venue && meetup.venue.name" class="meetup-event__venue-name">{{meetup.venue.name}}</p>
+            <p v-else-if="meetup.venue && meetup.venue.address_1" class="meetup-event__venue-name">{{meetup.venue.address_1}}</p>
+            <p v-else class="meetup-event__venue-name">Needs a location</p>
             <p>{{meetup.yes_rsvp_count}} people going</p>
           </a>
         </div>
@@ -32,7 +35,7 @@ export default {
   name: 'Filter',
   data() {
     return {
-      meetups: [
+      "meetups": [
         {
           yes_rsvp_count: 8,
           short_link: 'http://meetu.ps/e/D54Kr/k1RDM/i',
