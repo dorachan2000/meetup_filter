@@ -13,9 +13,13 @@
     </div>
     <ul class="filtered-list">
       <li v-for="meetup in meetups">
-        {{meetup.name}}
-        {{meetup.yes_rsvp_count}}
-        {{meetup.short_link}}
+        <div class="meetup-event__container">
+          <a :href="meetup.short_link">
+            <p class="meetup-event__group-name">{{meetup.group.name}}</p>
+            <p class="meetup-event__event-name">{{meetup.name}}</p>
+            <p>{{meetup.yes_rsvp_count}} people going</p>
+          </a>
+        </div>
       </li>
     </ul>
     <button v-on:click="getEvents">click for data</button>
@@ -70,5 +74,23 @@ li {
 
 a {
   color: #42b983;
+}
+p {
+  margin: 0;
+  padding: 0;
+}
+.filtered-list {
+  display: flex;
+  flex-direction: column;
+}
+.meetup-event__container {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 1rem;
+
+}
+.meetup-event__event-name {
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 </style>
