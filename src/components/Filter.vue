@@ -11,10 +11,14 @@
         <li>my meetup?</li>
       </ul>
     </div>
+    <button v-on:click="findUpcomingEvents">click for data</button>
+    <button v-on:click="filterEvents">click for filter</button>
     <ul class="filtered-list">
       <li v-for="meetup in meetups">
         <div class="meetup-event__container">
           <a :href="meetup.short_link">
+            <span class="meetup-event__">{{meetup.local_date}}</span>
+            <span class="meetup-event__">{{meetup.local_time}}</span>
             <p class="meetup-event__group-name">{{meetup.group.name}}</p>
             <p class="meetup-event__event-name">{{meetup.name}}</p>
             <p v-if="meetup.venue && meetup.venue.name" class="meetup-event__venue-name">{{meetup.venue.name}}</p>
@@ -25,12 +29,10 @@
         </div>
       </li>
     </ul>
-    <button v-on:click="getEvents">click for data</button>
   </div>
 </template>
-
 <script>
-import getEvents from '../api/index.js'
+import findUpcomingEvents from '../api/index.js'
 export default {
   name: 'Filter',
   data() {
@@ -44,16 +46,28 @@ export default {
           name: 'How to Build Awesome On Demand Apps by Elementz Product Manager',
         },
       ],
+      "filters": [
+        (meetup, rsvpCount) => { return meetup.yes_rsvp_count >= 3 },
+      ]
     };
   },
   created() {
-    this.getEvents()
+    this.findUpcomingEvents()
   },
   methods: {
-    getEvents: async function() {
-      const test = await getEvents()
+    findUpcomingEvents: async function() {
+      const test = await findUpcomingEvents()
       this.meetups = []
-      this.meetups = this.meetups.concat(test.slice(0, 10))
+      this.meetups = this.meetups.concat(test.slice(0, 50))
+    },
+    filterEvents: function() {
+      this.meetups = this.meetups.filter(meetup => {
+        for(let i = 0; i < this.filters.length; i++){
+          if(this.filters[i](meetup)) return true
+          else continue
+        }
+        return false
+      });
     }
   }
 };
@@ -92,7 +106,9 @@ p {
   width: 100%;
   text-align: left;
   margin-bottom: 1rem;
-
+  border: 1px solid #e1e0e0;
+  border-radius: 5px;
+  padding: 5px;
 }
 .meetup-event__event-name {
   font-size: 1.2rem;

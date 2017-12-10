@@ -94,7 +94,8 @@ export default {
                 type: "submit",
                 label: "",
                 buttonText: "Submit",
-                validateBeforeSubmit: true
+                validateBeforeSubmit: true,
+                onSubmit: ()=>{console.log('hello')}
               }
             ]
           }

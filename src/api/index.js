@@ -17,7 +17,7 @@ const getCategoriesFromQuery = (queryResult) => {
   // }, {});
 };
 const stringifyKeys = (keys) => keys.join(',')
-export default async function getEvents(options) {
+export default async function findUpcomingEvents(options) {
   // const ENDPOINT = 'find/events';
   const ENDPOINT = 'find/upcoming_events';
   const fields = [
@@ -46,14 +46,12 @@ export default async function getEvents(options) {
     lon: -118.49,
     lat: 34.02,
     radius: 5,
-    page: 50,
+    page: 100,
   };
-  // const url = `${API_DOMAIN}/${ENDPOINT}/?${qs.stringify(params)}`;
   const url = `${API_DOMAIN}/${ENDPOINT}/?${qs.stringify(params)}`;
   const res = await fetchJsonp(url)
   console.log('res', res)
   const json = await res.json();
   console.log('json', json)
   return json.data.events
-  // return getCategoriesFromQuery(json);
 }
