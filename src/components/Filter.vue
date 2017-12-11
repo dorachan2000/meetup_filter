@@ -33,6 +33,7 @@
 </template>
 <script>
 import findUpcomingEvents from '../api/index.js'
+import moment from 'moment'
 export default {
   name: 'Filter',
   data() {
@@ -47,7 +48,16 @@ export default {
         },
       ],
       "filters": [
-        (meetup, rsvpCount) => { return meetup.yes_rsvp_count >= 3 },
+        (meetup, rsvpCount) => { return meetup.yes_rsvp_count >= 5 },
+        (meetup, prefSchedule) => {
+          let keep = false 
+          let weekday = moment(meetup.local_date).day() 
+          let time = meetup.local_time 
+          keep = keep || meetup.visibility !== 'public'
+          keep = keep || ((weekday == 6 || weekday == 0 ) && time > "08:00" )
+          keep = keep || time > "17:00" 
+          return keep 
+        },
       ]
     };
   },
@@ -58,15 +68,15 @@ export default {
     findUpcomingEvents: async function() {
       const test = await findUpcomingEvents()
       this.meetups = []
-      this.meetups = this.meetups.concat(test.slice(0, 50))
+      this.meetups = this.meetups.concat(test.slice(0, 100))
     },
     filterEvents: function() {
       this.meetups = this.meetups.filter(meetup => {
         for(let i = 0; i < this.filters.length; i++){
-          if(this.filters[i](meetup)) return true
+          if(!this.filters[i](meetup)) return false 
           else continue
         }
-        return false
+        return true 
       });
     }
   }

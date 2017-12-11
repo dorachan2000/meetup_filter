@@ -26,29 +26,35 @@ export default async function findUpcomingEvents(options) {
     "group.category.id",
   ]
   const only = [
-    "name",
-    "created",
-    "group.name",
+    "events.name",
+    "events.created",
+    "events.group.name",
     "link",
     "why",
-    "short_link",
+    "events.short_link",
     "simple_html_description",
     "yes_rsvp_count",
     "group.category.id",
     "group.category.name",
+  ]
+  const only2 = [
+    "events",
+    "name",
+
   ]
   const params = {
     radius: 1,
     order: 'time',
     key: API_KEY,
     fields: stringifyKeys(fields),
-    // only: stringifyKeys(only),
+    only: stringifyKeys(only2),
     lon: -118.49,
     lat: 34.02,
     radius: 5,
-    page: 100,
+    page: 200,
   };
   const url = `${API_DOMAIN}/${ENDPOINT}/?${qs.stringify(params)}`;
+  console.log(url)
   const res = await fetchJsonp(url)
   console.log('res', res)
   const json = await res.json();
